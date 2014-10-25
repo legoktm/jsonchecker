@@ -5,16 +5,23 @@ import unittest
 import checker
 
 
-class CheckerTest(unittest.TestCase):
-    def test_check_file_good(self):
-        self.assertFalse(checker.check_file('good.json'))
+class DuplicateKeyFinderTest(unittest.TestCase):
+    def check_directory_helper(self, path):
+        finder = checker.DuplicateKeyFinder(path)
+        finder.check_directory(path)
+        return finder
 
-    def test_check_file_bad(self):
-        self.assertRaises(
-            checker.DuplicateKeyException,
-            checker.check_file,
-            'bad.json'
-        )
+    def test_check_file(self):
+        finder = self.check_directory_helper('testdata/good')
+        self.assertEqual(finder.errors, {})
+
+    def test_check_bad_file(self):
+        finder = self.check_directory_helper('testdata/bad')
+        self.assertIn('testdata/bad/bad.json', finder.errors)
+        self.assertIn('key', finder.errors['testdata/bad/bad.json'])
+        self.assertIn('testdata/bad/bad2.json', finder.errors)
+        self.assertIn('key3', finder.errors['testdata/bad/bad2.json'])
+
 
 if __name__ == '__main__':
     unittest.main()
