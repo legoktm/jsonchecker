@@ -18,11 +18,15 @@ def checker(seq):
 def check_directory(directory):
     files = os.listdir(directory)
     for fname in files:
+        fname = os.path.join(directory, fname)
+        if os.path.isdir(fname) and not fname.startswith('.'):
+            check_directory(fname)
+            continue
         if not (os.path.isfile(fname) and fname.endswith('.json')):
             continue
         print 'Checking %s...' % fname
         check_file(fname)
-    print 'No duplicate keys found'
+    return True
 
 
 def check_file(fname):
@@ -38,8 +42,8 @@ def check_file(fname):
 
 def main():
     fname = sys.argv[1]
-    if os.path.isdir(fname):
-        check_directory(fname)
+    if os.path.isdir(fname) and check_directory(fname):
+        print 'No duplicate keys found'
     elif check_file(fname):
         print 'No duplicate keys found'
 
