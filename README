@@ -1,0 +1,12 @@
+dupe-keys-checker
+
+Checks a JSON file for any duplicate keys, which would be ignored by the normal
+parser.
+
+Inspired and based off of:
+<https://mail.python.org/pipermail/python-list/2013-May/647954.html>.
+
+Usage:
+    python checker.py file_to_validate.json
+
+Released into the public domain.
