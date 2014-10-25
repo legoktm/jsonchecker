@@ -28,7 +28,10 @@ class DuplicateKeyFinder:
 
     def check_directory(self, directory):
         has_errors = False
-        files = os.listdir(directory)
+        if os.path.isdir(directory):
+            files = os.listdir(directory)
+        else:
+            files = [directory]
         for fname in files:
             if fname.startswith('.'):
                 continue
