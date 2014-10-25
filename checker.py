@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 
 import json
 import os
@@ -32,11 +33,11 @@ def check_directory(directory):
             continue
         if not (os.path.isfile(fname) and fname.endswith('.json')):
             continue
-        print 'Checking %s...' % fname
+        print('Checking %s...' % fname)
         try:
             check_file(fname)
-        except DuplicateKeyException, e:
-            print 'ERROR: Duplicate key found for "%s"' % e.key
+        except DuplicateKeyException as e:
+            print('ERROR: Duplicate key found for "%s"' % e.key)
             has_errors = True
     return has_errors
 
@@ -57,14 +58,14 @@ def main():
     if os.path.isdir(fname):
         if check_directory(fname):
             # Errors found
-            print 'Duplicate keys found.'
+            print('Duplicate keys found.')
             sys.exit(1)
         else:
-            print 'No duplicate keys found'
+            print('No duplicate keys found')
             sys.exit(0)
     else:
         check_file(fname)
-        print 'No duplicate keys found'
+        print('No duplicate keys found')
 
 if __name__ == '__main__':
     main()
