@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+import os
 import sys
 
 
@@ -12,6 +13,16 @@ def checker(seq):
         else:
             d[key] = value
     return d
+
+
+def check_directory(directory):
+    files = os.listdir(directory)
+    for fname in files:
+        if not (os.path.isfile(fname) and fname.endswith('.json')):
+            continue
+        print 'Checking %s...' % fname
+        check_file(fname)
+    print 'No duplicate keys found'
 
 
 def check_file(fname):
@@ -27,7 +38,9 @@ def check_file(fname):
 
 def main():
     fname = sys.argv[1]
-    if check_file(fname):
+    if os.path.isdir(fname):
+        check_directory(fname)
+    elif check_file(fname):
         print 'No duplicate keys found'
 
 if __name__ == '__main__':
