@@ -8,5 +8,9 @@ Inspired and based off of:
 
 Usage:
     python checker.py file_to_validate.json
+    python checker.py directory/of/json/files/
+
+The script will exit with a status code of 1 if any duplicate keys are found,
+0 if none are.
 
 Released into the public domain.
