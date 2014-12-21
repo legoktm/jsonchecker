@@ -2,7 +2,7 @@
 from setuptools import setup
 
 setup(
-    name='dupekeysjson',
+    name='jsonchecker',
     version='0.2',
     author='Kunal Mehta',
     author_email='legoktm@gmail.com',
