@@ -8,10 +8,11 @@ import sys
 
 
 class DuplicateKeyFinder:
-    def __init__(self, directory):
+    def __init__(self, directory, quiet=False):
         self.directory = directory
         self.errors = defaultdict(list)
         self.invalids = {}
+        self.quiet = quiet
         self.current_fname = None
 
     def mark_error(self, key):
@@ -42,7 +43,10 @@ class DuplicateKeyFinder:
                 continue
             if not (os.path.isfile(fname) and fname.endswith('.json')):
                 continue
-            print('Checking %s...' % fname)
+            if self.quiet:
+                print('.', end='')
+            else:
+                print('Checking %s...' % fname)
             self.current_fname = fname
             self.check_file(fname)
 
@@ -63,6 +67,8 @@ class DuplicateKeyFinder:
 
     def exit(self):
         if self.errors or self.invalids:
+            if self.quiet:
+                print('')
             for fname in self.errors:
                 print('----')
                 print('Duplicate keys found in %s:' % fname)
@@ -78,7 +84,7 @@ class DuplicateKeyFinder:
 
 
 def main():
-    finder = DuplicateKeyFinder(sys.argv[1])
+    finder = DuplicateKeyFinder(sys.argv[1], quiet='--quiet' in sys.argv)
     finder.run()
 
 if __name__ == '__main__':

@@ -14,6 +14,9 @@ Usage:
 
 * ```jsonchecker directory/of/json/files/```
 
+An optional --quiet argument can be passed, and will cause the script to print out a . instead
+of the full filename for each file scanned. Useful if you plan on checking a large number of files.
+
 The script will exit with a status code of 1 if any duplicate keys are found,
 0 if none are.
 
