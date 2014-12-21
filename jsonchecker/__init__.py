@@ -5,7 +5,6 @@ from collections import defaultdict
 import json
 import os
 import sys
-import traceback
 
 
 class DuplicateKeyFinder:
@@ -55,8 +54,8 @@ class DuplicateKeyFinder:
             text = f.read()
         try:
             json.loads(text, object_pairs_hook=self.checker)
-        except ValueError:
-            self.invalids[fname] = traceback.format_exc()
+        except ValueError as e:
+            self.invalids[fname] = str(e)
 
     def run(self):
         self.check_directory(self.directory)
