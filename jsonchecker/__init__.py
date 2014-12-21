@@ -69,6 +69,9 @@ class DuplicateKeyFinder:
             sys.exit(0)
 
 
-if __name__ == '__main__':
+def main():
     finder = DuplicateKeyFinder(sys.argv[1])
     finder.run()
+
+if __name__ == '__main__':
+    main()
