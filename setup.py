@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='dupekeysjson',
-    version='0.1',
+    version='0.2',
     author='Kunal Mehta',
     author_email='legoktm@gmail.com',
     url='https://github.com/legoktm/jsonchecker/',
