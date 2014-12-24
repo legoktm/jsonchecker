@@ -8,8 +8,7 @@ import sys
 
 
 class DuplicateKeyFinder:
-    def __init__(self, directory, quiet=False):
-        self.directory = directory
+    def __init__(self, quiet=False):
         self.errors = defaultdict(list)
         self.invalids = {}
         self.quiet = quiet
@@ -31,13 +30,12 @@ class DuplicateKeyFinder:
     def check_directory(self, directory):
         has_errors = False
         if os.path.isdir(directory):
-            files = os.listdir(directory)
+            files = [os.path.join(directory, fname) for fname in os.listdir(directory)]
         else:
             files = [directory]
         for fname in files:
             if fname.startswith('.'):
                 continue
-            fname = os.path.join(directory, fname)
             if os.path.isdir(fname):
                 has_errors = self.check_directory(fname) or has_errors
                 continue
@@ -61,8 +59,9 @@ class DuplicateKeyFinder:
         except ValueError as e:
             self.invalids[fname] = str(e)
 
-    def run(self):
-        self.check_directory(self.directory)
+    def run(self, directories):
+        for directory in directories:
+            self.check_directory(directory)
         self.exit()
 
     def exit(self):
@@ -84,8 +83,15 @@ class DuplicateKeyFinder:
 
 
 def main():
-    finder = DuplicateKeyFinder(sys.argv[1], quiet='--quiet' in sys.argv)
-    finder.run()
+    finder = DuplicateKeyFinder(quiet='--quiet' in sys.argv)
+    directories = []
+    for arg in sys.argv[1:]:
+        if not arg.startswith('--'):
+            directories.append(arg)
+    if not directories:
+        print('No files or directories provided')
+        sys.exit(1)
+    finder.run(directories)
 
 if __name__ == '__main__':
     main()

@@ -12,7 +12,7 @@ class DuplicateKeyFinderTest(unittest.TestCase):
         return os.path.join(os.path.dirname(__file__), path)
 
     def check_directory_helper(self, path):
-        finder = jsonchecker.DuplicateKeyFinder(self.path(path))
+        finder = jsonchecker.DuplicateKeyFinder()
         finder.check_directory(self.path(path))
         return finder
 
