@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='jsonchecker',
-    version='0.5',
+    version='0.5.1',
     author='Kunal Mehta',
     author_email='legoktm@gmail.com',
     url='https://github.com/legoktm/jsonchecker/',
