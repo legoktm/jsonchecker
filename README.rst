@@ -1,12 +1,14 @@
 jsonchecker
-====
-[![Build Status](https://travis-ci.org/legoktm/jsonchecker.svg?branch=master)](https://travis-ci.org/legoktm/jsonchecker)
+===========
+.. image:: https://travis-ci.org/legoktm/jsonchecker.svg?branch=master
+   :alt: Build Status
+   :target: https://travis-ci.org/legoktm/jsonchecker
 
 Checks a JSON file for any duplicate keys, which would be ignored by the normal
 parser.
 
-Inspired by and based off of:
-<https://mail.python.org/pipermail/python-list/2013-May/647954.html>.
+Inspired by and based off of a python-list mailing list post:
+<https://mail.python.org/pipermail/python-list/2013-May/660874.html>.
 
 Usage:
 
