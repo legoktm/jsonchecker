@@ -79,6 +79,8 @@ class DuplicateKeyFinder:
                 print(tb)
             sys.exit(1)
         else:
+            if self.quiet:
+                print('')
             sys.exit(0)
 
 
