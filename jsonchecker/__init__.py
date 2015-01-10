@@ -12,17 +12,15 @@ class DuplicateKeyFinder:
         self.errors = defaultdict(list)
         self.invalids = {}
         self.quiet = quiet
-        self.current_fname = None
 
-    def mark_error(self, key):
-        if self.current_fname:
-            self.errors[self.current_fname].append(key)
+    def mark_error(self, key, fname):
+        self.errors[fname].append(key)
 
-    def checker(self, seq):
+    def checker(self, seq, fname):
         d = {}
         for key, value in seq:
             if key in d:
-                self.mark_error(key)
+                self.mark_error(key, fname)
             else:
                 d[key] = value
         return d
@@ -46,7 +44,6 @@ class DuplicateKeyFinder:
                 print('.', end='')
             else:
                 print('Checking %s...' % fname)
-            self.current_fname = fname
             self.check_file(fname)
 
     def check_file(self, fname):
@@ -56,7 +53,7 @@ class DuplicateKeyFinder:
         with open(fname) as f:
             text = f.read()
         try:
-            json.loads(text, object_pairs_hook=self.checker)
+            json.loads(text, object_pairs_hook=lambda seq: self.checker(seq, fname))
         except ValueError as e:
             self.invalids[fname] = str(e)
 
