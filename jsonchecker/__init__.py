@@ -28,7 +28,6 @@ class DuplicateKeyFinder:
         return d
 
     def check_directory(self, directory):
-        has_errors = False
         if directory == '.':
             directory = os.getcwd()
         if os.path.isdir(directory):
@@ -39,7 +38,7 @@ class DuplicateKeyFinder:
             if fname.startswith('.'):
                 continue
             if os.path.isdir(fname):
-                has_errors = self.check_directory(fname) or has_errors
+                self.check_directory(fname)
                 continue
             if not (os.path.isfile(fname) and fname.endswith('.json')):
                 continue
