@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8  -*-
+"""Setup jsonchecker."""
 from setuptools import setup
 
 setup(
