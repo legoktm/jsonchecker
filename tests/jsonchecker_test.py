@@ -9,7 +9,6 @@ import jsonchecker
 
 
 class DuplicateKeyFinderTest(unittest.TestCase):
-
     """Test DuplicateKeyFinder."""
 
     def path(self, path):

@@ -11,7 +11,6 @@ from collections import defaultdict
 
 
 class DuplicateKeyFinder(object):
-
     """Duplicate Key Finder."""
 
     def __init__(self, quiet=False):
