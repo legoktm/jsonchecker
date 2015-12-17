@@ -68,7 +68,7 @@ class DuplicateKeyFinder(object):
         """Check each directory in directories."""
         for directory in directories:
             self.check_directory(directory)
-        self.exit()
+        return self.exit()
 
     def exit(self):
         """print errors and exit."""
