@@ -33,6 +33,8 @@ class DuplicateKeyFinderTest(unittest.TestCase):
         self.assertIn('key', finder.errors[self.path('testdata/bad/bad.json')])
         self.assertIn(self.path('testdata/bad/bad2.json'), finder.errors)
         self.assertIn('key3', finder.errors[self.path('testdata/bad/bad2.json')])
+        self.assertIn(self.path('testdata/bad/bad3.json'), finder.errors)
+        self.assertIn('key6', finder.errors[self.path('testdata/bad/bad3.json')])
         self.assertIn(self.path('testdata/bad/invalid.json'), finder.invalids)
 
 
