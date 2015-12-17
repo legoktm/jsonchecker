@@ -10,6 +10,11 @@ parser.
 Inspired by and based off of a python-list mailing list post:
 <https://mail.python.org/pipermail/python-list/2013-May/660874.html>.
 
+Dependencies:
+
+ * Python 2.7 or Python 3
+
+
 Installation:
 
  * ``pip install jsonchecker``
