@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8  -*-
-"""Script to detect duplicate keys in JSON files."""
+"""Script that validates JSON files and checks for duplicate keys."""
 from __future__ import print_function
 
 import json
@@ -8,6 +8,11 @@ import os
 import sys
 
 from collections import defaultdict
+
+__url__ = 'https://github.com/legoktm/jsonchecker'
+__author__ = 'Kunal Mehta'
+__email__ = 'legoktm@gmail.com'
+__version__ = '0.8.0dev'
 
 
 class DuplicateFinder(object):
