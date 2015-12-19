@@ -1,12 +1,12 @@
 language: python
 python:
-  - "2.7"
-  - "3.2"
-  - "3.3"
-  - "3.4"
-  - "3.5"
-  - "pypy"
   - "pypy3"
+  - "pypy"
+  - "3.5"
+  - "3.4"
+  - "3.3"
+  - "3.2"
+  - "2.7"
 
 sudo: false
 # command to install dependencies
