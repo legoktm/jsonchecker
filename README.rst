@@ -37,4 +37,8 @@ of the full filename for each file scanned. Useful if you plan on checking a lar
 The script will exit with a status code of 1 if any duplicate keys are found,
 0 if none are.
 
+An optional ``--values`` argument can be passed to additionally check for duplicate values within each key.
+The script will exit with a status code of 1 if there are either duplicate keys or duplicate values are found,
+0 if none are.
+
 Released into the public domain.

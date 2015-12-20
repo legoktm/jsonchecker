@@ -10,8 +10,8 @@ import sys
 from collections import defaultdict
 
 
-class DuplicateKeyFinder(object):
-    """Duplicate Key Finder."""
+class DuplicateFinder(object):
+    """Duplicate Finder base class."""
 
     def __init__(self, quiet=False):
         """Constructor."""
@@ -22,16 +22,6 @@ class DuplicateKeyFinder(object):
     def mark_error(self, key, fname):
         """Record an error."""
         self.errors[fname].append(key)
-
-    def checker(self, seq, fname):
-        """Check routine."""
-        d = {}
-        for key, value in seq:
-            if key in d:
-                self.mark_error(key, fname)
-            else:
-                d[key] = value
-        return d
 
     def check_directory(self, directory):
         """Check one directory."""
@@ -72,16 +62,16 @@ class DuplicateKeyFinder(object):
             self.check_directory(directory)
         return self.exit()
 
-    def exit(self):
+    def exit_with_msg(self, msg):
         """print errors and exit."""
         if self.errors or self.invalids:
             if self.quiet:
                 print('')
             for fname in self.errors:
                 print('----')
-                print('Duplicate keys found in %s:' % fname)
-                for key in self.errors[fname]:
-                    print('* %s' % key)
+                print('Duplicate %s found in %s:' % (msg, fname))
+                for duplicate in self.errors[fname]:
+                    print('* %s' % duplicate)
             for fname, tb in self.invalids.items():
                 print('----')
                 print('Error while parsing %s:' % fname)
@@ -91,6 +81,71 @@ class DuplicateKeyFinder(object):
             if self.quiet:
                 print('')
             return 0
+
+
+class DuplicateKeyFinder(DuplicateFinder):
+    """Duplicate Key Finder."""
+
+    def checker(self, seq, fname):
+        """Check routine."""
+        d = {}
+        for key, value in seq:
+            if key in d:
+                self.mark_error(key, fname)
+            else:
+                d[key] = value
+        return d
+
+    def exit(self):
+        """print errors and exit."""
+        return self.exit_with_msg('keys')
+
+
+class DuplicateValueFinder(DuplicateFinder):
+    """Duplicate Value Finder."""
+
+    def hashable(self, v):
+        """Determine whether `v` can be hashed."""
+        try:
+            hash(v)
+        except TypeError:
+            return False
+        return True
+
+    def dupes_in_list(self, l):
+        """Return hashable duplicates from this list."""
+        seen = set()
+        seen_twice = set()
+        # Adds all elements it doesn't know yet to seen and
+        # adds all others to seen_twice
+        for x in l:
+            if self.hashable(x):
+                if x in seen:
+                    seen_twice.add(x)
+                else:
+                    seen.add(x)
+        return list(seen_twice)
+
+    def checker(self, seq, fname):
+        """Check routine."""
+        d = {}
+        for key, value in seq:
+            if isinstance(value, list):
+                dupes = self.dupes_in_list(value)
+                good = []
+                for x in value:
+                    if x in dupes and x not in self.errors[fname]:
+                        self.mark_error(x, fname)
+                    else:
+                        good.append(x)
+                d[key] = good
+            else:
+                d[key] = value
+        return d
+
+    def exit(self):
+        """print errors and exit."""
+        return self.exit_with_msg('values')
 
 
 def main():
@@ -103,7 +158,13 @@ def main():
     if not directories:
         print('No files or directories provided')
         sys.exit(1)
-    sys.exit(finder.run(directories))
+    ret = finder.run(directories)
+
+    if '--values' in sys.argv:
+        finder = DuplicateValueFinder(quiet='--quiet' in sys.argv)
+        ret = finder.run(directories) | ret
+
+    sys.exit(ret)
 
 if __name__ == '__main__':
     main()
