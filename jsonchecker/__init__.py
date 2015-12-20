@@ -35,9 +35,11 @@ class DuplicateKeyFinder(object):
 
     def check_directory(self, directory):
         """Check one directory."""
-        if directory == '.':
-            directory = os.getcwd()
+        directory = os.path.abspath(directory)
         if os.path.isdir(directory):
+            last_directory = os.path.basename(directory)
+            if last_directory.startswith("."):
+                return
             files = [os.path.join(directory, fname) for fname in os.listdir(directory)]
         else:
             files = [directory]
