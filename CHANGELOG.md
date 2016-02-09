@@ -2,7 +2,8 @@
 
 ## 0.8.0
 
-* [](https://github.com/legoktm/jsonchecker/commit/) Move package metadata from setup.py into package
+* [](https://github.com/legoktm/jsonchecker/commit/) Release 0.8.0
+* [5afe98d](https://github.com/legoktm/jsonchecker/commit/5afe98d) Move package metadata from setup.py into package
 * [ea605f9](https://github.com/legoktm/jsonchecker/commit/ea605f9) Add --values to detect duplicate values
 * [3ae6c45](https://github.com/legoktm/jsonchecker/commit/3ae6c45) Let it run on parent directories
 * [3dd91b9](https://github.com/legoktm/jsonchecker/commit/3dd91b9) Run slower Python builds first

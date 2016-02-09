@@ -11,8 +11,8 @@ from collections import defaultdict
 
 __url__ = 'https://github.com/legoktm/jsonchecker'
 __author__ = 'Kunal Mehta'
-__email__ = 'legoktm@gmail.com'
-__version__ = '0.8.0dev'
+__email__ = 'legoktm@member.fsf.org'
+__version__ = '0.8.0'
 
 
 class DuplicateFinder(object):
