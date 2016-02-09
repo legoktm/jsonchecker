@@ -3,14 +3,21 @@
 """Setup jsonchecker."""
 from setuptools import setup
 
+init_py = open('jsonchecker/__init__.py').read().splitlines()
+metadata = [('__doc__', line) if line.startswith('"""')
+            else line.split(' = ')
+            for line in init_py
+            if line.startswith('__') or line.startswith('"""')]
+metadata = dict((name[2:-2], value.strip('"\'')) for name, value in metadata)
+
 setup(
     name='jsonchecker',
-    version='0.7.0',
-    author='Kunal Mehta',
-    author_email='legoktm@gmail.com',
-    url='https://github.com/legoktm/jsonchecker/',
+    version=metadata['version'],
+    author=metadata['author'],
+    author_email=metadata['email'],
+    url=metadata['url'],
     license='Public domain',
-    description='A script that validates JSON files and checks for duplicate keys.',
+    description=metadata['doc'],
     long_description=open('README.rst').read(),
     packages=['jsonchecker'],
     entry_points={
